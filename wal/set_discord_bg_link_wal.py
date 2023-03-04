@@ -6,8 +6,8 @@ from pathlib import Path
 import fileinput
 
 #constants
-wallpaper_location = "/home/renderinguser/.cache/wal/wal"
-discord_theme_css_path = "/home/renderinguser/.config/BetterDiscord/themes/Translucence.theme.css"
+wallpaper_location = os.path.expanduser("~/.cache/wal/wal")
+discord_theme_css_path = os.path.expanduser("~/.config/BetterDiscord/themes/Translucence.theme.css")
 
 # get wallaper
 text_file = open(wallpaper_location,"r").read()
