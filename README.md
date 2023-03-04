@@ -10,4 +10,10 @@ A repo of some random shellscripts and python scripts to help automate some stuf
 - Bash
 - ffmpeg
 - nitroshare-ui
-- ~/QuickAccess
+- ~/QuickAccess (this directory needs to exist, if not create a `QuickAcess` folder in your home directory)
+  
+  
+
+## Specific Install instructions:
+
+- [wal tools](./wal/INSTALLATION.md)
