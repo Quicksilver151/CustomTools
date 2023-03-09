@@ -32,8 +32,8 @@ bg_color_line += "1)\n"
 fg_color_line += "1)\n"    
 
 
-print(bg_color_line)
-print(fg_color_line)
+#print(bg_color_line)
+#print(fg_color_line)
 
 
 with open(godot_config_path,'r',encoding='utf-8') as file:
