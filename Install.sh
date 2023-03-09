@@ -15,5 +15,4 @@ ln -sr ./useful\ extras/ffconv.py $CustomPath/ffconv
 ln -sr ./wal/polywal.sh $CustomPath/polywal
 ln -sr ./wal/set_discord_bg_link_wal.py $CustomPath/set_discord_bg_link_wal
 ln -sr ./wal/set_firefox_tabliss_wal.sh $CustomPath/set_firefox_tabliss_wal
-
-
+ln -sr ./wal/godot4_wal.py $CustomPath/godot4_wal
