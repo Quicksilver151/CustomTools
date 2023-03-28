@@ -8,7 +8,7 @@ import fileinput
 # config paths
 colors_location = os.path.expanduser("~/.cache/wal/colors-putty.reg") #colors in numerical values
 godot_config_path = os.path.expanduser("~/.config/godot/editor_settings-4.tres")
-BG_OFFSET = 10
+BG_OFFSET = 20
 
 # get color list
 text_file = open(colors_location,"r")

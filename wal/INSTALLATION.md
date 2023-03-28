@@ -1,9 +1,9 @@
+WARNING: File paths to the wallpapers must not contain any space characters
+
 # How to install
 
 - Install all the dependencies mentioned under **requirements** in [README.md](../README.md)
 - Move or link all the files in the wal directory into `/bin/` or any other exported path (make sure to remove the extensions from the linked/copied files)
-  
-  
 
 ## Discord:
 
