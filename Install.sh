@@ -10,6 +10,7 @@ mkdir $CustomPath
 ln -sr ./annoyance/oddcap.py $CustomPath/oddcap
 ln -sr ./annoyance/rancap.py $CustomPath/rancap
 ln -sr ./annoyance/redactinator.py $CustomPath/redactinator
+ln -sr ./annoyance/redactextreme.py $CustomPath/redactextreme
 ln -sr ./fun/randsamplinggrid.py $CustomPath/randsamplinggrid
 ln -sr ./useful\ extras/ffconv.py $CustomPath/ffconv
 ln -sr ./wal/polywal.sh $CustomPath/polywal
