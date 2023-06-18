@@ -10,6 +10,10 @@ def main(args:list):
     if args.__len__() == 1:
         system("echo " +str(outputint + 1))
         return
+    if args[1] == "0":
+        system("wmctrl -s " + str(outputint))
+        return
+        
     system("wmctrl -s "+str(int(args[1])+outputint))
 
 if __name__ == "__main__":
