@@ -25,7 +25,8 @@ if __name__ == "__main__":
     # if extension same....
     name_add = ""
     if ext_from == ext_to:
-        name_add = "ffconv "
+        name_add = "ffconv/"
+        os.system("mkdir ffconv")
         
 
 
