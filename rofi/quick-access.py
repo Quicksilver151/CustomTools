@@ -10,6 +10,30 @@ from pathlib import Path
 import os, sys
 
 
+def get_qa_meta(full_path: Path) -> list:
+    
+    # try for .quickaccess file
+    quickaccess_file: Path = full_path / ".quickaccess"
+    extra_paths_meta: list[str] = [meta for meta in open(quickaccess_file, 'r').readlines()]
+    # try: extra_paths: list[Path] = [Path(path.strip()).expanduser() for path in open(quickaccess_file, 'r').readlines()]
+    # except: extra_paths: list[Path] = []
+    meta_list: list = []
+    for path in extra_paths_meta:
+        splits = path.split("->")
+        try: path: Path = Path(splits[0].strip()).expanduser()
+        except: path = None
+        try: name: str = splits[1].strip()
+        except: name = "a"
+        try: top: bool = splits[2].strip() == "true"
+        except: top = False
+
+        meta = [path, name, top]
+        meta_list.append(meta)
+        
+    return meta_list
+
+
+
 
 def main(args: list):
     # get path to dir from args
@@ -17,19 +41,25 @@ def main(args: list):
     
     # start rofi instance
     r = Rofi()
-
+    # access path
     full_path: Path = Path(arg_path).expanduser()
+
+    # rofi paths
     sub_dirs: list[Path] = [f for f in full_path.iterdir() if f.is_dir() or not f.name.startswith('.')]
-    
-    
-    # try for .quickaccess file
-    quickaccess_file: Path = full_path / ".quickaccess"
-    try: extra_paths: list[Path] = [Path(path.strip()).expanduser() for path in open(quickaccess_file, 'r').readlines()]
-    except: extra_paths = []
-    sub_dirs = sub_dirs + extra_paths
+    # rofi display names
+    rofi_display_names: list[str] = list(map(lambda f: f.name.lower(), sub_dirs))
+
+    # .quickaccess file parsing and adding
+    qa_meta = get_qa_meta(full_path)
+    for meta in qa_meta:
+        if meta[2]:
+            sub_dirs = [meta[0]] + sub_dirs
+            rofi_display_names = [meta[1]] + rofi_display_names
+        else:
+            sub_dirs = sub_dirs + [meta[0]]
+            rofi_display_names = rofi_display_names + [meta[1]]
 
     # show rofi popup
-    rofi_display_names: list[str] = list(map(lambda f: f.name.lower(), sub_dirs))
     index, key = r.select('', rofi_display_names)
 
     # check if valid selection
