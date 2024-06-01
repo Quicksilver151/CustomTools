@@ -2,6 +2,9 @@
 
 A repo of some random shellscripts and python scripts to help automate some stuff, make things easier, or to outright annoy people.
 
+note: install script is a bit outdated btw
+
+
 ### Requirements:
 
 - Python v3.8+
