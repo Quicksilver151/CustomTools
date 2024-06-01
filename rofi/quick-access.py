@@ -34,7 +34,6 @@ def get_qa_meta(full_path: Path) -> list:
 
 
 
-
 def main(args: list):
     # get path to dir from args
     arg_path: str = "~/QuickAccess" if args.__len__() == 1 else args[1]
@@ -46,8 +45,15 @@ def main(args: list):
 
     # rofi paths
     sub_dirs: list[Path] = [f for f in full_path.iterdir() if f.is_dir() or not f.name.startswith('.')]
+
+    # allows for special folder name sytax: "[SM] subject matter"
+    def display(path: Path):
+        if len(path.name.split("] ")) == 1:
+            return path.name.lower()
+        return path.name.split(" ")[0] + " " + path.name.split(" ", 1)[1].lower()
+        
     # rofi display names
-    rofi_display_names: list[str] = list(map(lambda f: f.name.lower(), sub_dirs))
+    rofi_display_names: list[str] = list(map(display, sub_dirs))
 
     # .quickaccess file parsing and adding
     qa_meta = get_qa_meta(full_path)
@@ -71,8 +77,6 @@ def main(args: list):
     if selected_path.is_dir():
         launch_command = f"{FILE_MANAGER} \"{selected_path}\" &"
     else:
-        print(os.path.dirname(selected_path), "ahahahah")
-
         launch_command = f"cd {selected_path.parent}; {TEXT_EDITOR} \"{selected_path}\" &"
     os.system(launch_command)
 
