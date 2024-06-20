@@ -39,7 +39,7 @@ def main(args: list):
     arg_path: str = "~/QuickAccess" if args.__len__() == 1 else args[1]
     
     # start rofi instance
-    r = Rofi()
+    r = Rofi(rofi_args=['-i', '-sort', '-sorting-method', 'fzf'])
     # access path
     full_path: Path = Path(arg_path).expanduser()
 
