@@ -12,8 +12,10 @@ note: install script is a bit outdated btw
 - Polybar
 - Bash
 - ffmpeg
+- mpv
+- yt-dlp
 - nitroshare-ui
-- ~/QuickAccess (this directory needs to exist, if not create a `QuickAcess` folder in your home directory)
+- ~/QuickAccess (this directory needs to exist, if not create a `QuickAccess` folder in your home directory)
   
   
 
