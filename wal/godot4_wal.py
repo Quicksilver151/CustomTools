@@ -16,24 +16,24 @@ text = text_file.read()
 lines = text.split("\n")
 
 # grabs 2 main colors
-background_colors = lines[5].split(";")[0].lstrip("\"Colour2=\"").rstrip("\"  ").split(",")
-foreground_colors = lines[11].split(";")[0].lstrip("\"Colour8=\"").rstrip("\"  ").split(",")
-
+background_colors = lines[5].split(";")[0].split("\"")[3].split(",")
+foreground_colors = lines[17].split(";")[0].split("\"")[3].split(",")
+# print(foreground_colors, background_colors)
 bg_color_line = "interface/theme/base_color = Color("
 fg_color_line = "interface/theme/accent_color = Color("
 for i in range(3):
-    bg_color = (int(background_colors[i])+BG_OFFSET)/256
-    fg_color = (int(foreground_colors[i])+BG_OFFSET)/256
+    bg_color = (float(background_colors[i])+BG_OFFSET)/256.0
+    fg_color = (float(foreground_colors[i])+BG_OFFSET)/256.0
     
     bg_color_line += (str(bg_color)+", ")
     fg_color_line += (str(fg_color)+", ")
 
 bg_color_line += "1)\n"
-fg_color_line += "1)\n"    
+fg_color_line += "1.0)\n"    
 
 
-#print(bg_color_line)
-#print(fg_color_line)
+# print(bg_color_line)
+# print(fg_color_line)
 
 
 with open(godot_config_path,'r',encoding='utf-8') as file:
