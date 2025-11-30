@@ -1,0 +1,99 @@
+#!/bin/env python3
+
+import ast
+import pathlib
+from tree_sitter import Language, Parser
+import tree_sitter_bash
+
+# --- Setup Tree-sitter parser for Bash ---
+BASH_LANGUAGE = Language(tree_sitter_bash.language())
+parser = Parser(BASH_LANGUAGE)
+
+# --- Helper functions ---
+def scan_python(file_path):
+    """Return set of top-level imports in a Python file"""
+    try:
+        tree = ast.parse(file_path.read_text())
+    except Exception:
+        return set()
+    
+    imports = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for n in node.names:
+                imports.add(n.name.split('.')[0])
+        elif isinstance(node, ast.ImportFrom):
+            if node.module:
+                imports.add(node.module.split('.')[0])
+    return imports
+
+def scan_bash(file_path):
+    """Return set of commands in a Bash script"""
+    try:
+        src_bytes = file_path.read_text().encode('utf-8')
+    except Exception:
+        return set()
+    
+    tree = parser.parse(src_bytes)
+    commands = set()
+    
+    def traverse(node):
+        if node.type == 'command_name':
+            cmd = src_bytes[node.start_byte:node.end_byte].decode('utf-8')
+            if cmd and not cmd.startswith('$'):
+                commands.add(cmd)
+        for child in node.children:
+            traverse(child)
+    
+    traverse(tree.root_node)
+    return commands
+
+# --- Main scan ---
+root = pathlib.Path('.')
+python_imports = set()
+bash_commands = set()
+
+for f in root.rglob('*'):
+    if not f.is_file():
+        continue
+    
+    # Skip hidden files/directories
+    if any(part.startswith('.') for part in f.parts):
+        continue
+    
+    if f.suffix == '.py':
+        python_imports.update(scan_python(f))
+    elif f.suffix == '.sh':
+        bash_commands.update(scan_bash(f))
+
+# Common bash builtins (optional filtering)
+BASH_BUILTINS = {
+    'echo', 'cd', 'pwd', 'export', 'source', '.', 'set', 'unset',
+    'if', 'then', 'else', 'elif', 'fi', 'for', 'while', 'do', 'done',
+    'case', 'esac', 'function', 'return', 'exit', 'read', 'test', '[',
+    'declare', 'local', 'readonly', 'shift', 'eval', 'exec', 'printf'
+}
+
+# Separate external commands from builtins
+external_commands = bash_commands - BASH_BUILTINS
+builtin_commands = bash_commands & BASH_BUILTINS
+
+# --- Print report ---
+print("## Dependencies\n")
+
+if python_imports:
+    print("### Python packages")
+    for pkg in sorted(python_imports):
+        print(f"- {pkg}")
+    print()
+
+if external_commands:
+    print("### Shell commands (external)")
+    for cmd in sorted(external_commands):
+        print(f"- {cmd}")
+    print()
+
+if builtin_commands:
+    print("### Shell builtins")
+    for cmd in sorted(builtin_commands):
+        print(f"- {cmd}")
