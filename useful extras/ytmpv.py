@@ -21,10 +21,12 @@ def main():
     video_link: str = pc.paste()
     
     socket_file = Path("/tmp/ytmpv-socket")
+    print(video_link)
     if socket_file.exists():
         print("huh")
         os.system(f"{append_mpv_socket_instance1}{video_link}{append_mpv_socket_instance2}")
     else:
+        print("haaa")
         os.system(f"{new_mpv_socket_instance} '{video_link}'")
         os.remove("/tmp/ytmpv-socket")
 

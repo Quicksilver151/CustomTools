@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/home/renderinguser/.venvs/system/bin/python
 
 from rofi import Rofi
 import os
@@ -18,6 +18,7 @@ def main():
 
     # get directories
     raw_options: list[str] = os.listdir(os.path.expanduser("~/QuickAccess"))
+    print(raw_options)
     filtered_options = list(filter(valid_dirs, raw_options))
     
     options = []
