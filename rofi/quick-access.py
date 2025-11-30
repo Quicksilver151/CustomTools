@@ -35,18 +35,19 @@ def get_qa_meta(full_path: Path) -> list:
 
 
 def main(args: list):
-    # get path to dir from args
+    # get path to dir from args or default to ~/QuickAccess
     arg_path: str = "~/QuickAccess" if args.__len__() == 1 else args[1]
     
     # start rofi instance
     r = Rofi(rofi_args=['-i', '-sort', '-sorting-method', 'fzf'])
+
     # access path
     full_path: Path = Path(arg_path).expanduser()
 
     # rofi paths
     sub_dirs: list[Path] = [f for f in full_path.iterdir() if f.is_dir() or not f.name.startswith('.')]
 
-    # allows for special folder name sytax: "[SM] subject matter"
+    # allows for special folder name syntax: "[SM] subject matter"
     def display(path: Path):
         if len(path.name.split("] ")) == 1:
             return path.name.lower()
@@ -56,14 +57,17 @@ def main(args: list):
     rofi_display_names: list[str] = list(map(display, sub_dirs))
 
     # .quickaccess file parsing and adding
-    qa_meta = get_qa_meta(full_path)
-    for meta in qa_meta:
-        if meta[2]:
-            sub_dirs = [meta[0]] + sub_dirs
-            rofi_display_names = [meta[1]] + rofi_display_names
-        else:
-            sub_dirs = sub_dirs + [meta[0]]
-            rofi_display_names = rofi_display_names + [meta[1]]
+    try:
+        qa_meta = get_qa_meta(full_path)
+        for meta in qa_meta:
+            if meta[2]:
+                sub_dirs = [meta[0]] + sub_dirs
+                rofi_display_names = [meta[1]] + rofi_display_names
+            else:
+                sub_dirs = sub_dirs + [meta[0]]
+                rofi_display_names = rofi_display_names + [meta[1]]
+    except:
+        pass
 
     # show rofi popup
     index, key = r.select('', rofi_display_names)
