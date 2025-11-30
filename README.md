@@ -24,6 +24,11 @@ Run `install.sh`
 - time
 - tkinter
 
+List
+```bash
+fileinput glob json os pathlib platformdirs pyperclip random re rofi subprocess sys time tkinter
+```
+
 ### Shell programs
 - acpi
 - awk
@@ -63,6 +68,12 @@ Run `install.sh`
 - xkill
 - yt-dlp
 - zip
+
+List:
+
+```bash
+acpi awk basename cat chmod cp dunstctl ffmpeg find godot4_wal grep head i3lock killall ln ls mkdir neofetch networkmanager_dmenu nitroshare nohup notify-send mpv okular_wal paplay pgrep pidof polybar polybarwal pywalfox realpath sleep socat wmctrl xdotool xkill yt-dlp zip
+```
 
 ### Misc
 
