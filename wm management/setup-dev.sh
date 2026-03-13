@@ -13,7 +13,7 @@ nohup kitty --title battop -e nu -e battop&
 sleep 0.5
 nohup kitty --title btop -e nu -e btop&
 sleep 0.5
-nohup kitty --title salatui -o font_size=22 -e nu -e salatui&
+nohup kitty --title salatui -o font_size=16 -e nu -e "salat_mv -cant"&
 sleep 0.5
 xdotool key Super+Shift+Left
 xdotool key Super+Control+Left
