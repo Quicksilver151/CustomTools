@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-TARGET_DIR="$HOME/CustomPath"
+TARGET_DIR="$HOME/.local/bin"
 mkdir -p "$TARGET_DIR"
 
 # Remove extension
