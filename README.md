@@ -37,6 +37,7 @@ fileinput glob json os pathlib platformdirs pyperclip random re rofi subprocess 
 - chmod
 - cp
 - dunstctl
+- erdtree
 - ffmpeg
 - find
 - godot4_wal
