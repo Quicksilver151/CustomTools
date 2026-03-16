@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-import sys, time, math, os
+import sys, time, math
 
-# -g or --gradient for lolcat-style slow gradient
 gradient = '-g' in sys.argv or '--gradient' in sys.argv
 
 text = sys.stdin.read().rstrip('\n')
@@ -20,9 +19,10 @@ def rainbow_line(line, offset, row):
         out.append(f'\x1b[38;2;{r};{g};{b}m{ch}')
     return ''.join(out) + '\x1b[0m'
 
-os.system('tput civis')
+sys.stdout.write('\x1b[?25l')  # hide cursor
+sys.stdout.flush()
 try:
-    print('\n'.join(lines))  # reserve space
+    print('\n'.join(lines))
     offset = 0
     while True:
         sys.stdout.write(f'\x1b[{n}A')
@@ -32,5 +32,5 @@ try:
         offset = (offset + 0.02) % 1.0
         time.sleep(0.033)
 finally:
-    os.system('tput cnorm')
-    print()
+    sys.stdout.write('\x1b[?25h\n')  # restore cursor
+    sys.stdout.flush()
