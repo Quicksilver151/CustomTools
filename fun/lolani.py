@@ -19,8 +19,6 @@ def rainbow_line(line, offset, row):
         out.append(f'\x1b[38;2;{r};{g};{b}m{ch}')
     return ''.join(out) + '\x1b[0m'
 
-sys.stdout.write('\x1b[?25l')  # hide cursor
-sys.stdout.flush()
 try:
     print('\n'.join(lines))
     offset = 0
@@ -28,9 +26,11 @@ try:
         sys.stdout.write(f'\x1b[{n}A')
         for row, line in enumerate(lines):
             sys.stdout.write(rainbow_line(line, offset, row) + '\n')
+        # park cursor at end of last line
+        sys.stdout.write(f'\x1b[{n}A\x1b[{n}B\x1b[{len(lines[-1])}C')
         sys.stdout.flush()
         offset = (offset + 0.02) % 1.0
         time.sleep(0.033)
 finally:
-    sys.stdout.write('\x1b[?25h\n')  # restore cursor
+    sys.stdout.write('\n')
     sys.stdout.flush()
