@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-TARGET_DIR="$HOME/.local/bin"
+# TARGET_DIR="$HOME/.local/bin"
+TARGET_DIR="$HOME/CustomPath"
 mkdir -p "$TARGET_DIR"
+
+UNLINK=false
+if [[ "${1:-}" == "-u" ]]; then
+    UNLINK=true
+fi
 
 # Remove extension
 strip_ext() {
@@ -26,7 +32,7 @@ find . -type f | while read -r src; do
 
     # Skip installer & README
     case "$base" in
-        Install.sh|README.md)
+        install|Install.sh|README.md)
             continue
             ;;
     esac
@@ -34,6 +40,16 @@ find . -type f | while read -r src; do
     # Strip extension for the link target
     name_no_ext=$(strip_ext "$src")
     dest="$TARGET_DIR/$name_no_ext"
+
+    if [[ "$UNLINK" == true ]]; then
+        if [[ -L "$dest" ]]; then
+            rm "$dest"
+            echo "Unlinked: $dest"
+        else
+            echo "SKIP: '$dest' is not a symlink." >&2
+        fi
+        continue
+    fi
 
     # If symlink exists → skip
     if [[ -L "$dest" ]]; then
