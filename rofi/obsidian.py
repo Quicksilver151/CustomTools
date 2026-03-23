@@ -18,8 +18,9 @@ def main():
     index, key = r.select("Vault: ", l_options)
     
     name = options[index]
-    cmd = f"obsidian \"obsidian://open?vault={name}\""
+    cmd = f"obsidian-app \"obsidian://open?vault={name}\""
     
+    print(cmd)
     if -1 in [key, index]:
         return
     os.system(cmd)
