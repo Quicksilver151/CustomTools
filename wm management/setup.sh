@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/env bash
 
-second-monitor-setup-normal-secondary;
+second-monitor-setup;
 sleep 2;
 setup-dev;
 
