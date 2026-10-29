@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 SERVICE="nitroshare-ui"
 if pgrep -d -x "$SERVICE"

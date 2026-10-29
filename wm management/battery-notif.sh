@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 while true
 do
   battery_level=`acpi -b | grep -P -o '[0-9]+(?=%)'`

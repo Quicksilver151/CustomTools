@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 if [ -e ./run*sh ]; then
     echo "Running..."
     ./run*sh "$@"
